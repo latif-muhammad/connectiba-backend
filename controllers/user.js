@@ -15,7 +15,9 @@ exports.getProfile = (req, res) => {
 
 }
 
+// DELETE PROFILE
 
-// ADDING post to DB
-exports.createPost = (req, res) => {
-}
+
+// UPDATE PROFILE
+
+
