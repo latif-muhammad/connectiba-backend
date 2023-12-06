@@ -12,6 +12,9 @@ exports.signup = (req, res) => {
         gender: userData.gender,
         phone_number: userData.phone_number,
         cnic_number: userData.cnic_number,
+        city: userData.city,
+        country: userData.country,
+        current_job : userData.current_job,
 
     }).then((result) => {
         return res.status(201).json({
@@ -19,11 +22,13 @@ exports.signup = (req, res) => {
             data: result,
         });
     }).catch(err => {
-        return res.json({
+        console.log("error", err);
+        return res.status(401).json({
             success: false,
             err: {
                 name: err.name,
                 message: err.errors,
+            
             }
         });
 

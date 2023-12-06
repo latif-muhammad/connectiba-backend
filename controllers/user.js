@@ -1,8 +1,5 @@
 const sequelize = require('../utilities/database');
 const RoomMember = require('../models/room_member');
-const Comment = require('../models/comment');
-const Like = require('../models/like');
-const Job = require('../models/job');
 const User = require('../models/user');
 const Post = require('../models/post');
 const { Op } = require('sequelize');
@@ -38,7 +35,6 @@ exports.getProfile = (req, res) => {
 
 // DELETE PROFILE
 
-
 // UPDATE PROFILE
 
 
@@ -47,14 +43,14 @@ exports.getProfile = (req, res) => {
 
 exports.searchUser = (req, res) => {
     console.log(req.body);
-
     User.findAll({
         where: {
             [Op.or]: [
-                { 'first_name': req.body.searchText },
-                { 'last_name': req.body.searchText },
-                // {'job_title' : req.body.searchText}
-                // {}
+                { 'first_name': { [Op.like]: `%${req.body.searchText}%` } },
+                { 'last_name': { [Op.like]: `%${req.body.searchText}%` } },
+                { 'current_job': { [Op.substring]: req.body.searchText } },
+                { 'city': { [Op.like]: `%${req.body.searchText}%` } },
+                { 'country': { [Op.like]: `%${req.body.searchText}%` } },
             ],
         },
     }).then((result) => {
@@ -63,7 +59,10 @@ exports.searchUser = (req, res) => {
             result: result
         });
     }).catch((error) => {
+        console.log("this is error in te", error);
         res.status(404).json({ success: false, err: error });
-
     });
 }
+
+
+

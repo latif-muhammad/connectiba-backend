@@ -5,20 +5,21 @@ const Job = sequelize.define('Job', {
     job_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true
     },
     job_title: {
         type: DataTypes.STRING(255),
-        allowNull: true // Set to false if job_title cannot be null
+        allowNull: false 
     },
     job_description: {
         type: DataTypes.STRING(255),
-        allowNull: true // Set to false if job_description cannot be null
+        allowNull: true
     }
 }, {
 
     tableName: 'jobs',
-    timestamps: false // Set to true if you want to include timestamps
+    timestamps: true 
 });
 
 module.exports = Job;

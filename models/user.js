@@ -1,7 +1,9 @@
 
-const Like = require('./like');
+const Post = require('./post');
 const Comment = require('./comment');
-const Post = require('./post')
+const Like = require('./comment');
+
+
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../utilities/database');
 
@@ -40,13 +42,20 @@ const User = sequelize.define('User', {
   cnic_number: {
     type: DataTypes.BIGINT,
   },
-  address: {
+  city: {
+    type: DataTypes.TEXT,
+
+  },
+  country: {
     type: DataTypes.TEXT,
   },
+  current_job: {
+    type: DataTypes.TEXT,
+  }
 },
   {
-    timestamps: false,  // Set to true if you want Sequelize to handle createdAt and updatedAt fields
-    tableName: 'users', // Specify the table name if it's different from the model name
+    timestamps: true,  
+    tableName: 'users', 
   });
 
 

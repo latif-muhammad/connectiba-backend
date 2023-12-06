@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user')
 const postController = require('../controllers/posts')
+const aboutController = require('../controllers/about');
 
 
 // USER routes
@@ -17,6 +18,13 @@ router.post("/comments", postController.updateComments);
 router.post("/likes", postController.updateLikes);
 router.get("/likes", postController.getLikes);
 router.get("/comments", postController.getComments);
+
+
+// USER DETAILS ROUTES
+
+router.post("/jobs", aboutController.postJobs);
+router.get("/jobs", aboutController.getJobs);
+
 
 
 

@@ -3,12 +3,29 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const sequelize = require('./utilities/database');
 
+
+
+// const User = require('./models/user');
+// const Room = require('./models/room');
+// const Post = require('./models/post');
+// const Comment = require('./models/comment');
+// const Like = require('./models/like');
+// const RoomMember = require('./models/room');
+// const Location = require('./models/location');
+// const job = require('./models/job');
+// const Job_history = require('./models/job_history');
+
+
+
 // Routes
 const authRoutes = require('./routes/auth');
 const userRoute = require('./routes/user');
 const adminRoute = require('./routes/admin');
 
 const app = express();
+
+
+
 
 
 

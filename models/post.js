@@ -46,14 +46,12 @@ const Post = sequelize.define('Post', {
 
 
 
-// foreign key relation
 Post.hasMany(Comment, { foreignKey: 'post_id', sourceKey: 'post_id' });
+Post.hasMany(Like, { foreignKey: 'post_id', sourceKey: 'post_id'});
 
+Like.belongsTo(Post, { foreignKey: 'post_id', sourceKey: 'post_id' });
 Comment.belongsTo(Post, { foreignKey: 'post_id', targetKey: 'post_id' });
 Post.belongsTo(Room, { foreignKey: 'room_id', targetKey: 'room_id' });
-
-
-
 
 
 module.exports = Post;

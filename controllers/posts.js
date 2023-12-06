@@ -34,6 +34,7 @@ exports.getPosts = (req, res) => {
 // ADDING NEW POSTS
 exports.createPost = (req, res) => {
     const data = req.body;
+    console.log("this is post media", data.media);
     postData = {
         title: data.title,
         content: data.content,
@@ -49,7 +50,7 @@ exports.createPost = (req, res) => {
             posted: result
         });
     }).catch((err) => {
-        // console.log(err);
+        console.log(err);
         res.status(400).json(err);
 
     });

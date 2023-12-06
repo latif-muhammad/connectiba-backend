@@ -33,9 +33,11 @@ const Like = sequelize.define('Like', {
 });
 
 
-Post.hasMany(Like, { foreignKey: 'post_id', sourceKey: 'post_id' });
+// /ECAUSE ERROR
 
-Like.belongsTo(Post, { foreignKey: 'post_id', targetKey: 'post_id' });
+// Post.hasMany(Like, { foreignKey: 'post_id', sourceKey: 'post_id' });
+
+// Like.belongsTo(Post, { foreignKey: 'post_id', targetKey: 'post_id' });
 
 
 module.exports = Like;
