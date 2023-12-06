@@ -1,3 +1,4 @@
+
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utilities/database');
 const Post = require('./post');
@@ -9,19 +10,20 @@ const Like = sequelize.define('Like', {
         autoIncrement: true,
         primaryKey: true
     },
+
     post_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'posts',
+            model: Post,
             key: 'post_id'
-        }
+        },
     },
     erp_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'users',
+            model: User,
             key: 'erp_id'
         }
     },
@@ -31,9 +33,9 @@ const Like = sequelize.define('Like', {
 });
 
 
+Post.hasMany(Like, { foreignKey: 'post_id', sourceKey: 'post_id' });
 
-//  foreign key associations
-Like.belongsTo(Post, { foreignKey: 'post_id' });
-Like.belongsTo(User, { foreignKey: 'erp_id' });
+Like.belongsTo(Post, { foreignKey: 'post_id', targetKey: 'post_id' });
+
 
 module.exports = Like;

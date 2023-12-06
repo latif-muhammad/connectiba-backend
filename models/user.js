@@ -1,21 +1,11 @@
-// module.exports = class User {
-//     constructor(erp_id, first_name, last_name, email, password, date_of_birth, gender, phone_number, CNIC_number, address) {
-//         this.erp_id = erp_id;
-//         this.first_name = first_name;
-//         this.last_name = last_name;
-//         this.password = password;
-//         this.email = email;
-//         this.date_of_birth = date_of_birth;
-//         this.gender = gender;
-//         this.phone_number = phone_number;
-//         this.CNIC_number = CNIC_number;
-//         this.address = address;
-//     }
-// }
 
-
+const Like = require('./like');
+const Comment = require('./comment');
+const Post = require('./post')
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../utilities/database');
+
+
 
 const User = sequelize.define('User', {
   erp_id: {
@@ -53,15 +43,25 @@ const User = sequelize.define('User', {
   address: {
     type: DataTypes.TEXT,
   },
-  registration_date: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-  },
 },
   {
-    timestamps: true,  // Set to true if you want Sequelize to handle createdAt and updatedAt fields
+    timestamps: false,  // Set to true if you want Sequelize to handle createdAt and updatedAt fields
     tableName: 'users', // Specify the table name if it's different from the model name
   });
+
+
+
+User.hasMany(Post, { foreignKey: 'posted_by', sourceKey: 'erp_id' });
+User.hasMany(Comment, { foreignKey: 'erp_id', sourceKey: 'erp_id' });
+User.hasMany(Like, { foreignKey: 'erp_id', sourceKey: 'erp_id' });
+
+
+
+Post.belongsTo(User, { foreignKey: 'posted_by', targetKey: 'erp_id' });
+Like.belongsTo(User, { foreignKey: 'erp_id', targetKey: 'erp_id' });
+Comment.belongsTo(User, { foreignKey: 'erp_id', targetKey: 'erp_id' });
+
+
 
 
 module.exports = User;

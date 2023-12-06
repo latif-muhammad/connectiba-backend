@@ -1,16 +1,6 @@
 const { Sequelize } = require('sequelize');
 
 
-// const pool = mysql.createPool({
-//     host: 'localhost',
-//     user: 'root',
-//     database: 'connectiba',
-//     password: 'admin'
-// });
-
-// module.exports = pool.promise();
-
-
 const sequelize = new Sequelize({
     dialect: 'mysql', // Specify your database dialect here: 'mysql', 'postgres', 'sqlite', 'mssql'
     host: 'localhost',

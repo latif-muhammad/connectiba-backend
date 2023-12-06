@@ -13,19 +13,27 @@ const Comment = sequelize.define('Comment', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
+
     post_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: Post,
+            key: 'post_id'
+        },
     },
     erp_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: User,
+            key: 'erp_id'
+        }
     },
 }, {
     tableName: 'comments',
     timestamps: true,
 });
 
-// Define foreign key associations
-Comment.belongsTo(Post, { foreignKey: 'post_id' });
-Comment.belongsTo(User, { foreignKey: 'erp_id' });
+
+module.exports = Comment;

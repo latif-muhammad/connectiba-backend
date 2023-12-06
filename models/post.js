@@ -1,7 +1,11 @@
 
+const Like = require('./like');
 const Room = require('./room');
 const User = require('./user');
-const { DataTypes } = require('sequelize');
+const Comment = require('./comment');
+
+const { Sequelize, DataTypes } = require('sequelize');
+
 const sequelize = require('../utilities/database');
 
 const Post = sequelize.define('Post', {
@@ -21,7 +25,7 @@ const Post = sequelize.define('Post', {
     },
     room_id: {
         type: DataTypes.INTEGER,
-        allowNull:false,
+        allowNull: false,
         references: {
             model: Room,
             key: 'room_id',
@@ -29,7 +33,7 @@ const Post = sequelize.define('Post', {
     },
     posted_by: {
         type: DataTypes.INTEGER,
-        allowNull:false,
+        allowNull: false,
         references: {
             model: User,
             key: 'erp_id',
@@ -37,15 +41,19 @@ const Post = sequelize.define('Post', {
     },
 }, {
     tableName: 'posts',
-    timestamps: true, 
+    timestamps: true,
 });
 
 
 
 // foreign key relation
+Post.hasMany(Comment, { foreignKey: 'post_id', sourceKey: 'post_id' });
 
+Comment.belongsTo(Post, { foreignKey: 'post_id', targetKey: 'post_id' });
 Post.belongsTo(Room, { foreignKey: 'room_id', targetKey: 'room_id' });
-Post.belongsTo(User, { foreignKey: 'posted_by', targetKey: 'erp_id' });
+
+
+
 
 
 module.exports = Post;

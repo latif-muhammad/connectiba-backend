@@ -3,6 +3,9 @@ const RoomMember = require('../models/room_member');
 const Comment = require('../models/comment');
 const Like = require('../models/like');
 const Job = require('../models/job');
+const User = require('../models/user');
+const Post = require('../models/post');
+const { Op } = require('sequelize');
 
 exports.getTest = (req, res) => {
     console.log(RoomMember);
@@ -12,7 +15,25 @@ exports.getTest = (req, res) => {
 
 
 exports.getProfile = (req, res) => {
+    const erp_id = req.params.erp_id;
+    User.findOne({
+        include: [{
+            model: Post,
+        },
+        ],
+        where: { 'erp_id': erp_id },
 
+
+    }).then((result) => {
+        console.log(result);
+        return res.json(result);
+    }).catch((error) => {
+        console.log(error);
+        return res.json({
+            "err": error
+
+        });
+    });
 }
 
 // DELETE PROFILE
@@ -21,3 +42,28 @@ exports.getProfile = (req, res) => {
 // UPDATE PROFILE
 
 
+
+// Search user
+
+exports.searchUser = (req, res) => {
+    console.log(req.body);
+
+    User.findAll({
+        where: {
+            [Op.or]: [
+                { 'first_name': req.body.searchText },
+                { 'last_name': req.body.searchText },
+                // {'job_title' : req.body.searchText}
+                // {}
+            ],
+        },
+    }).then((result) => {
+        return res.status(200).json({
+            success: true,
+            result: result
+        });
+    }).catch((error) => {
+        res.status(404).json({ success: false, err: error });
+
+    });
+}

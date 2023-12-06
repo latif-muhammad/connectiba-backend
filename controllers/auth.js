@@ -42,12 +42,14 @@ exports.login = (req, res) => {
         },
     }).then((userData) => {
         if (!userData || userData.password !== password) {
-            return res.json({
+            return res.status(401).json({
                 message: "User name or password is incorrect",
             });
         }
-        return res.json({
-            user: userData,
+        console.log("this is nt", userData);
+        return res.status(200).json({
+            success: true,
+            userData,
         });
     }).catch((err) => {
         return res.json({
