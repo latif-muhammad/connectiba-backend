@@ -14,6 +14,8 @@ router.post('/search', userController.searchUser);
 // POSTS ROUTES
 router.get("/posts/:roomId", postController.getPosts);
 router.post("/post", postController.createPost);
+router.get("/single-post/:postId", postController.getSinglePosts);
+
 router.post("/comments", postController.updateComments);
 router.post("/likes", postController.updateLikes);
 router.get("/likes", postController.getLikes);

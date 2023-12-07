@@ -15,11 +15,37 @@ exports.getPosts = (req, res) => {
             },
             {
                 model: User
-            },{
+            }, {
                 model: Like
             }
         ],
         where: { 'room_id': roomId }
+    }).then((result) => {
+        return res.json(result);
+    }).catch((error) => {
+        console.log(error);
+        return res.json({
+            "err": error
+
+        });
+    });
+}
+
+// get post single:
+exports.getSinglePosts = (req, res) => {
+    const postId = req.params.postId;
+    Post.findOne({
+        include: [
+            {
+                model: Comment,
+            },
+            {
+                model: User
+            }, {
+                model: Like
+            }
+        ],
+        where: { 'post_id': postId }
     }).then((result) => {
         return res.json(result);
     }).catch((error) => {
@@ -56,7 +82,6 @@ exports.createPost = (req, res) => {
     });
 }
 
-
 // DELETE POSTS
 
 exports.deletePost = (req, res) => {
@@ -72,11 +97,45 @@ exports.updatePost = (req, res) => {
 // LIke posts
 exports.updateLikes = (req, res) => {
 
+
 }
 
-// LIke posts
-exports.updateComments = (req, res) => {
 
+// LIke posts
+
+exports.updateComments = (req, res) => {
+    const postData = req.body;
+    Comment.create(postData).then(result => {
+        console.log("this is ", result);
+        Post.findAll({
+            where: {
+                post_id: req.body.post_id,
+            },
+            include: [
+                {
+                    model: Comment,
+                },
+                {
+                    model: User
+                }, {
+                    model: Like
+                },
+            ],
+        }).then((result) => {
+            return res.status(201).json(result);
+        }).catch((error) => {
+            console.log(error);
+            return res.json({
+                "err": error
+
+            });
+        });
+    }).catch((err) => {
+
+        console.log(err);
+        res.status(400).json(err);
+
+    });
 }
 
 
